@@ -1,0 +1,12 @@
+LICENSE
+README.md
+pyproject.toml
+src/syslang/__init__.py
+src/syslang/cli.py
+src/syslang/parser.py
+src/syslang.egg-info/PKG-INFO
+src/syslang.egg-info/SOURCES.txt
+src/syslang.egg-info/dependency_links.txt
+src/syslang.egg-info/entry_points.txt
+src/syslang.egg-info/requires.txt
+src/syslang.egg-info/top_level.txt

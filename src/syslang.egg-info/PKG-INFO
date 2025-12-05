@@ -1,0 +1,30 @@
+Metadata-Version: 2.4
+Name: syslang
+Version: 1.0.0
+Summary: DSL for transdisciplinary systemic analysis
+Author-email: Echopraxium <echopraxium@github.com>
+License: MIT
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: click>=8.0
+Dynamic: license-file
+
+# SysLang - DSL for Transdisciplinary Systemic Analysis
+
+[![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)]()
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)]()
+
+A Domain-Specific Language for describing and analyzing complex systems using universal construction principles.
+
+## 🚀 Quick Start
+
+```bash
+# Clone and install
+git clone https://github.com/Echopraxium/syslang.git
+cd syslang
+pip install -e .
+
+# Analyze an example
+syslang analyze examples/minimal.syslang.yml

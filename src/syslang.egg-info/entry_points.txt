@@ -1,0 +1,2 @@
+[console_scripts]
+syslang = syslang.cli:main

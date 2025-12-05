@@ -1,0 +1,19 @@
+system:
+  name: "Minimal Example System"
+  domain: "informatics"
+  scale: "meso"
+  description: "A minimal example to demonstrate SysLang syntax"
+
+principles:
+  - name: "Modularity"
+    parameters:
+      coupling: "low"
+      cohesion: "high"
+    confidence: 0.8
+
+tests:
+  refutable: "The system is modular if its modularity index Q > 0.3"
+  metrics:
+    - "modularity_index"
+    - "coupling_coefficient"
+  limits: "Only applicable to systems with at least 3 components"

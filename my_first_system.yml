@@ -1,0 +1,15 @@
+system:
+  name: "My Network"
+  domain: "informatics"
+  scale: "meso"
+
+principles:
+  - name: "Modularity"
+    parameters:
+      coupling: "low"
+      cohesion: "high"
+    confidence: 0.8
+
+tests:
+  refutable: "If modules aren't independent, the system fails"
+  metrics: ["throughput", "latency"]
