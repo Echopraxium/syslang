@@ -1,0 +1,307 @@
+{
+  "principles": {
+    "Modularity": {
+      "description": "Organization into semi-independent units",
+      "category": "Structure",
+      "meta_principle": false,
+      "operator": false,
+      "parameters": {
+        "coupling": {
+          "description": "Degree of interdependence between modules",
+          "type": "categorical",
+          "values": ["low", "medium", "high"]
+        },
+        "cohesion": {
+          "description": "Strength of relationships within modules",
+          "type": "categorical",
+          "values": ["low", "medium", "high"]
+        },
+        "granularity": {
+          "description": "Size/number of modules",
+          "type": "continuous",
+          "range": [1, 1000]
+        }
+      },
+      "compatible_with": ["Hierarchy", "Interface"],
+      "conflicts_with": ["Monolithic"],
+      "examples": [
+        "Software modules",
+        "Biological organs", 
+        "Organizational departments"
+      ],
+      "hypothesis_template": "System should have modularity index Q > {threshold}",
+      "default_threshold": 0.3,
+      "metrics": ["modularity_index", "coupling_coefficient"]
+    },
+
+    "Hierarchy": {
+      "description": "Nested levels of organization and control",
+      "category": "Structure",
+      "parameters": {
+        "levels": {
+          "description": "Number of hierarchical levels",
+          "type": "integer",
+          "range": [1, 10]
+        },
+        "span": {
+          "description": "Width of control at each level",
+          "type": "categorical",
+          "values": ["narrow", "medium", "wide"]
+        },
+        "control": {
+          "description": "Type of control structure",
+          "type": "categorical",
+          "values": ["centralized", "decentralized", "hybrid"]
+        }
+      },
+      "compatible_with": ["Modularity", "Communication"],
+      "examples": [
+        "Management structures",
+        "Taxonomic classifications",
+        "Software architectures"
+      ],
+      "hypothesis_template": "Control flow should follow hierarchical channels with score > {threshold}",
+      "default_threshold": 0.6,
+      "metrics": ["hierarchy_score", "span_of_control"]
+    },
+
+    "Distribution": {
+      "description": "Pattern of resource or information allocation across system",
+      "category": "Information",
+      "parameters": {
+        "pattern": {
+          "description": "Spatial/temporal distribution pattern",
+          "type": "categorical",
+          "values": ["centralized", "decentralized", "distributed", "hybrid"]
+        },
+        "topology": {
+          "description": "Network structure of distribution",
+          "type": "categorical", 
+          "values": ["bus", "star", "mesh", "tree", "ring", "network", "generic"]
+        },
+        "fairness": {
+          "description": "Equity of distribution",
+          "type": "categorical",
+          "values": ["equal", "priority", "weighted", "random"]
+        },
+        "efficiency": {
+          "description": "Optimality of allocation",
+          "type": "continuous",
+          "range": [0, 1]
+        }
+      },
+      "compatible_with": ["Communication", "Network", "Coordination"],
+      "examples": [
+        "Wealth distribution (economic)",
+        "Nutrient flow in ecosystems (ecological)",
+        "Load balancing in computing (technical)"
+      ],
+      "hypothesis_template": "Resource allocation should match {pattern} pattern with efficiency > {threshold}",
+      "default_threshold": 0.6,
+      "metrics": ["distribution_efficiency", "fairness_index", "throughput"]
+    },
+
+    "Communication": {
+      "description": "Information exchange between system components",
+      "category": "Information",
+      "parameters": {
+        "direction": {
+          "description": "Flow direction of information",
+          "type": "categorical",
+          "values": ["unidirectional", "bidirectional", "multidirectional"]
+        },
+        "protocol": {
+          "description": "Rules governing exchange",
+          "type": "string"
+        },
+        "bandwidth": {
+          "description": "Information capacity",
+          "type": "continuous",
+          "units": "bits/second"
+        },
+        "latency": {
+          "description": "Transmission delay",
+          "type": "continuous", 
+          "units": "seconds"
+        }
+      },
+      "compatible_with": ["Coordination", "Synchronization", "Distribution"],
+      "examples": [
+        "Neural signaling",
+        "Network protocols",
+        "Language",
+        "Chemical signaling"
+      ],
+      "hypothesis_template": "Information flow should have fidelity > {threshold}",
+      "default_threshold": 0.8,
+      "metrics": ["information_fidelity", "latency", "throughput"]
+    },
+
+    "Resilience": {
+      "description": "Ability to recover from perturbations and maintain function",
+      "category": "Dynamics",
+      "parameters": {
+        "recovery_time": {
+          "description": "Time to return to normal operation",
+          "type": "categorical",
+          "values": ["fast", "medium", "slow"],
+          "units": "time"
+        },
+        "robustness": {
+          "description": "Resistance to initial disturbance",
+          "type": "categorical",
+          "values": ["high", "medium", "low"]
+        },
+        "adaptability": {
+          "description": "Capacity to adjust to new conditions",
+          "type": "continuous",
+          "range": [0, 1]
+        }
+      },
+      "compatible_with": ["Adaptation", "Redundancy"],
+      "examples": [
+        "Ecosystem recovery",
+        "Financial system stability", 
+        "Network fault tolerance"
+      ],
+      "hypothesis_template": "System should recover within {recovery_time} timeframe after perturbation",
+      "metrics": ["recovery_time", "robustness_index", "function_preservation"]
+    },
+
+    "Adaptation": {
+      "description": "Adjustment to changing environmental conditions",
+      "category": "Dynamics",
+      "parameters": {
+        "timescale": {
+          "description": "Speed of adaptation",
+          "type": "categorical",
+          "values": ["short", "medium", "long"],
+          "units": "time"
+        },
+        "mechanism": {
+          "description": "How adaptation occurs",
+          "type": "categorical",
+          "values": ["learning", "evolution", "adjustment", "selection"]
+        },
+        "plasticity": {
+          "description": "Degree of possible change",
+          "type": "continuous",
+          "range": [0, 1]
+        }
+      },
+      "compatible_with": ["Learning", "Evolution", "Feedback"],
+      "examples": [
+        "Biological evolution",
+        "Machine learning",
+        "Market adjustments"
+      ],
+      "hypothesis_template": "System should adapt to environmental changes on {timescale} timescale",
+      "metrics": ["adaptation_rate", "fitness_improvement", "plasticity_index"]
+    },
+
+    "Trajectory": {
+      "description": "Form and direction of system evolution over time",
+      "category": "Dynamics", 
+      "parameters": {
+        "shape": {
+          "description": "Geometric form of trajectory",
+          "type": "categorical",
+          "values": ["linear", "cyclic", "spiral", "chaotic", "convergent", "divergent"]
+        },
+        "directionality": {
+          "description": "Movement pattern",
+          "type": "categorical",
+          "values": ["convergent", "divergent", "oscillatory", "random"]
+        },
+        "stability": {
+          "description": "Consistency of trajectory",
+          "type": "continuous",
+          "range": [0, 1]
+        }
+      },
+      "compatible_with": ["Process", "Evolution"],
+      "examples": [
+        "Orbital paths",
+        "Economic cycles",
+        "Learning curves",
+        "Developmental pathways"
+      ],
+      "hypothesis_template": "System evolution should follow {shape} trajectory with consistency > {threshold}",
+      "default_threshold": 0.7,
+      "metrics": ["trajectory_consistency", "predictability_index", "stability_index"]
+    },
+
+    "Process": {
+      "description": "Temporal unfolding and transformation; applies to how principles manifest",
+      "category": "Meta",
+      "meta_principle": true,
+      "parameters": {
+        "type": {
+          "description": "Nature of process",
+          "type": "categorical",
+          "values": ["sequential", "parallel", "iterative", "recursive"]
+        },
+        "timescale": {
+          "description": "Duration characteristics",
+          "type": "categorical",
+          "values": ["instant", "continuous", "generational", "epochal"]
+        },
+        "reversibility": {
+          "description": "Whether process can be reversed",
+          "type": "boolean"
+        }
+      },
+      "compatible_with": ["All principles"],
+      "examples": [
+        "Process of modularization",
+        "Process of adaptation", 
+        "Process of communication establishment"
+      ],
+      "hypothesis_template": "System transformations should follow identifiable process patterns",
+      "metrics": ["process_regularity", "transformation_efficiency", "reversibility_index"]
+    },
+
+    "Polarity": {
+      "description": "Creates opposed or complementary poles in a system; transforms other principles",
+      "category": "Operator",
+      "operator": true,
+      "parameters": {
+        "poles": {
+          "description": "Number of opposing points",
+          "type": "integer",
+          "range": [2, 10]
+        },
+        "type": {
+          "description": "Nature of opposition",
+          "type": "categorical",
+          "values": ["complementary", "antagonistic", "dialectical", "gradient"]
+        },
+        "strength": {
+          "description": "Intensity of polarization",
+          "type": "categorical",
+          "values": ["weak", "medium", "strong"]
+        }
+      },
+      "applies_to": ["Structure", "Communication", "Information", "Dynamics", "Distribution"],
+      "examples": [
+        "Polarized modularity (modules with opposite functions)",
+        "Polarized communication (debate/dialogue)",
+        "Polarized distribution (unequal resource allocation)"
+      ],
+      "hypothesis_template": "System should exhibit {poles}-pole structure with measurable polarization",
+      "metrics": ["polarity_strength", "separation_index", "bimodality_coefficient"]
+    }
+  },
+  
+  "categories": {
+    "Structure": "Principles related to spatial/logical organization",
+    "Information": "Principles related to representation, communication, and processing",
+    "Dynamics": "Principles related to temporal evolution and behavior",
+    "Meta": "Principles that apply to other principles",
+    "Operator": "Principles that transform or modify other principles"
+  },
+  
+  "version": "1.1.0",
+  "last_updated": "2024-01-15",
+  "author": "SysLang Framework"
+}

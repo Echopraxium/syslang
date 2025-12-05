@@ -1,0 +1,312 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://syslang.org/schemas/principles/v1.0.0",
+  "title": "SysLang Principles Schema",
+  "description": "Schema for validating SysLang principle definitions",
+  "type": "object",
+  
+  "properties": {
+    "principles": {
+      "type": "object",
+      "description": "Dictionary of principle definitions",
+      "additionalProperties": {
+        "$ref": "#/definitions/principle"
+      },
+      "minProperties": 1
+    },
+    
+    "categories": {
+      "type": "object",
+      "description": "Definition of principle categories",
+      "additionalProperties": {
+        "type": "string",
+        "description": "Description of the category"
+      }
+    },
+    
+    "version": {
+      "type": "string",
+      "description": "Version of the principles library",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "examples": ["1.0.0", "2.1.3"]
+    },
+    
+    "last_updated": {
+      "type": "string",
+      "format": "date",
+      "description": "Last update date (YYYY-MM-DD)"
+    },
+    
+    "author": {
+      "type": "string",
+      "description": "Author or organization"
+    },
+    
+    "description": {
+      "type": "string",
+      "description": "Overall description of this principles library"
+    },
+    
+    "domain": {
+      "type": "string",
+      "description": "Primary domain of these principles",
+      "examples": ["general", "biology", "informatics", "sociology", "physics"]
+    }
+  },
+  
+  "required": ["principles", "categories", "version"],
+  "additionalProperties": true,
+  
+  "definitions": {
+    "principle": {
+      "type": "object",
+      "description": "Definition of a single principle",
+      
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of the principle",
+          "minLength": 10,
+          "maxLength": 500
+        },
+        
+        "category": {
+          "type": "string",
+          "description": "Category of the principle",
+          "enum": ["Structure", "Information", "Dynamics", "Meta", "Operator", "Other"]
+        },
+        
+        "meta_principle": {
+          "type": "boolean",
+          "description": "Whether this is a meta-principle (applies to other principles)",
+          "default": false
+        },
+        
+        "operator": {
+          "type": "boolean",
+          "description": "Whether this is an operator (transforms other principles)",
+          "default": false
+        },
+        
+        "parameters": {
+          "type": "object",
+          "description": "Parameters that can be configured for this principle",
+          "additionalProperties": {
+            "$ref": "#/definitions/parameter"
+          }
+        },
+        
+        "compatible_with": {
+          "type": "array",
+          "description": "List of principles that are generally compatible with this one",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        
+        "conflicts_with": {
+          "type": "array", 
+          "description": "List of principles that may conflict with this one",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        
+        "applies_to": {
+          "type": "array",
+          "description": "For operators: which principles this operator can be applied to",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        
+        "examples": {
+          "type": "array",
+          "description": "Example manifestations of this principle",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        
+        "hypothesis_template": {
+          "type": "string",
+          "description": "Template for generating testable hypotheses",
+          "pattern": ".*\\{.*\\}.*",
+          "examples": [
+            "System should have {metric} > {threshold}",
+            "If {condition}, then {prediction}"
+          ]
+        },
+        
+        "default_threshold": {
+          "type": ["number", "string"],
+          "description": "Default threshold value for hypothesis testing"
+        },
+        
+        "metrics": {
+          "type": "array",
+          "description": "Suggested metrics for measuring this principle",
+          "items": {
+            "type": "string"
+          }
+        },
+        
+        "references": {
+          "type": "array",
+          "description": "Academic or literature references",
+          "items": {
+            "type": "string"
+          }
+        },
+        
+        "tags": {
+          "type": "array",
+          "description": "Keywords for searching/filtering",
+          "items": {
+            "type": "string"
+          }
+        },
+        
+        "complexity": {
+          "type": "string",
+          "description": "Implementation/analysis complexity",
+          "enum": ["low", "medium", "high"]
+        },
+        
+        "universality": {
+          "type": "string",
+          "description": "How universal this principle is across domains",
+          "enum": ["domain_specific", "cross_domain", "universal"]
+        }
+      },
+      
+      "required": ["description", "category"],
+      "additionalProperties": true,
+      
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "operator": { "const": true }
+            }
+          },
+          "then": {
+            "required": ["applies_to"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "meta_principle": { "const": true }
+            }
+          },
+          "then": {
+            "properties": {
+              "category": { "const": "Meta" }
+            }
+          }
+        }
+      ]
+    },
+    
+    "parameter": {
+      "type": "object",
+      "description": "Definition of a principle parameter",
+      
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of the parameter",
+          "minLength": 10,
+          "maxLength": 200
+        },
+        
+        "type": {
+          "type": "string",
+          "description": "Data type of the parameter",
+          "enum": ["string", "integer", "number", "boolean", "categorical", "continuous", "vector"]
+        },
+        
+        "values": {
+          "type": "array",
+          "description": "For categorical parameters: allowed values",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        
+        "range": {
+          "type": "array",
+          "description": "For numeric parameters: [min, max] range",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        
+        "default": {
+          "type": ["string", "number", "boolean", "null"],
+          "description": "Default value for the parameter"
+        },
+        
+        "required": {
+          "type": "boolean",
+          "description": "Whether this parameter is required",
+          "default": false
+        },
+        
+        "units": {
+          "type": "string",
+          "description": "Measurement units (if applicable)",
+          "examples": ["seconds", "meters", "bits/second", "percentage"]
+        },
+        
+        "constraints": {
+          "type": "array",
+          "description": "Additional constraints or validation rules",
+          "items": {
+            "type": "string"
+          }
+        },
+        
+        "impact": {
+          "type": "string",
+          "description": "Impact of this parameter on system behavior",
+          "enum": ["low", "medium", "high", "critical"]
+        }
+      },
+      
+      "required": ["description", "type"],
+      "additionalProperties": true,
+      
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": { "const": "categorical" }
+            }
+          },
+          "then": {
+            "required": ["values"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": { "enum": ["integer", "number", "continuous"] }
+            }
+          },
+          "then": {
+            "required": ["range"]
+          }
+        }
+      ]
+    }
+  }
+}

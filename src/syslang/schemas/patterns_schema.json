@@ -1,0 +1,158 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://syslang.org/schemas/patterns/v1.0.0",
+  "title": "SysLang Distribution Patterns Schema",
+  "description": "Schema for validating distribution pattern definitions",
+  "type": "object",
+  
+  "properties": {
+    "distribution_patterns": {
+      "type": "object",
+      "description": "Dictionary of distribution pattern definitions",
+      "additionalProperties": {
+        "$ref": "#/definitions/pattern"
+      },
+      "minProperties": 1
+    },
+    
+    "pattern_categories": {
+      "type": "object",
+      "description": "Categorization of patterns",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    
+    "parent_principle": {
+      "type": "string",
+      "const": "Distribution",
+      "description": "All patterns must derive from Distribution principle"
+    }
+  },
+  
+  "required": ["distribution_patterns", "pattern_categories", "version", "parent_principle"],
+  "additionalProperties": true,
+  
+  "definitions": {
+    "pattern": {
+      "type": "object",
+      
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 300
+        },
+        
+        "parent_principle": {
+          "type": "string",
+          "const": "Distribution"
+        },
+        
+        "specific_parameters": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/pattern_parameter"
+          }
+        },
+        
+        "hypothesis": {
+          "type": "string",
+          "description": "Characteristic testable hypothesis for this pattern"
+        },
+        
+        "test": {
+          "type": "string",
+          "description": "Recommended test procedure"
+        },
+        
+        "metric": {
+          "type": "string",
+          "description": "Key metric for evaluating this pattern"
+        },
+        
+        "characteristics": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        
+        "examples": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        
+        "strengths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        
+        "weaknesses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        
+        "scalability": {
+          "type": "string",
+          "enum": ["good", "moderate", "poor"]
+        },
+        
+        "robustness": {
+          "type": "string",
+          "enum": ["high", "medium", "low"]
+        }
+      },
+      
+      "required": ["description", "parent_principle", "hypothesis", "test", "metric"],
+      "additionalProperties": true
+    },
+    
+    "pattern_parameter": {
+      "type": "object",
+      
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        
+        "type": {
+          "type": "string",
+          "enum": ["string", "integer", "number", "boolean", "categorical"]
+        },
+        
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        
+        "default": {
+          "type": ["string", "number", "boolean"]
+        },
+        
+        "required_for_pattern": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      
+      "required": ["description", "type"]
+    }
+  }
+}

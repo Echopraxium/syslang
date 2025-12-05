@@ -1,0 +1,101 @@
+{
+  "distribution_patterns": {
+    "Bus": {
+      "description": "Shared channel distribution with arbitration (1↔N via common medium)",
+      "parent_principle": "Distribution",
+      "specific_parameters": {
+        "arbitration": {
+          "description": "Method for managing access",
+          "type": "categorical",
+          "values": ["temporal", "priority", "random", "contention"]
+        },
+        "protocol": {
+          "description": "Communication protocol used",
+          "type": "string"
+        },
+        "bandwidth": {
+          "description": "Capacity of shared channel",
+          "type": "continuous",
+          "units": "bits/second"
+        }
+      },
+      "hypothesis": "Connections scale as O(N) rather than O(N²)",
+      "test": "Count actual connections vs. potential all-to-all connections",
+      "metric": "connection_efficiency = actual_connections / N²",
+      "characteristics": ["Shared medium", "Arbitration needed", "Potential bottleneck", "Simple wiring"],
+      "examples": ["Ethernet network", "Computer bus architecture", "Public transportation system"]
+    },
+
+    "Star": {
+      "description": "Centralized distribution through a hub (all communication via center)",
+      "parent_principle": "Distribution",
+      "specific_parameters": {
+        "hub_capacity": {
+          "description": "Processing capacity of central node",
+          "type": "categorical",
+          "values": ["high", "medium", "low"]
+        },
+        "redundancy": {
+          "description": "Backup paths if hub fails",
+          "type": "boolean"
+        }
+      },
+      "hypothesis": "Single point of failure at hub, bottleneck potential",
+      "test": "Measure throughput with/without hub",
+      "metric": "hub_load_ratio = hub_traffic / total_traffic",
+      "characteristics": ["Central hub", "Radial connections", "Single point of control"],
+      "examples": ["Star network topology", "Hub-and-spoke transportation", "Centralized authority"]
+    },
+
+    "Mesh": {
+      "description": "Distributed network with multiple possible paths",
+      "parent_principle": "Distribution",
+      "specific_parameters": {
+        "connectivity": {
+          "description": "Degree of node interconnection",
+          "type": "continuous",
+          "range": [0, 1]
+        },
+        "path_redundancy": {
+          "description": "Number of alternative paths",
+          "type": "integer",
+          "range": [1, 100]
+        }
+      },
+      "hypothesis": "High robustness, lower efficiency than hierarchical patterns",
+      "test": "Measure resilience to node failures",
+      "metric": "network_resilience = functional_nodes / total_nodes after failures",
+      "characteristics": ["Multiple paths", "High redundancy", "Complex routing"],
+      "examples": ["Mesh network", "Internet routing", "Social networks"]
+    },
+
+    "Tree": {
+      "description": "Hierarchical distribution with parent-child relationships",
+      "parent_principle": "Distribution",
+      "specific_parameters": {
+        "depth": {
+          "description": "Number of hierarchical levels",
+          "type": "integer",
+          "range": [1, 10]
+        },
+        "branching_factor": {
+          "description": "Average children per node",
+          "type": "continuous",
+          "range": [1, 100]
+        }
+      },
+      "hypothesis": "Efficient for hierarchical data, slower for cross-branch communication",
+      "test": "Measure communication latency between nodes at different levels",
+      "metric": "cross_branch_latency_ratio = cross_branch_time / same_branch_time",
+      "characteristics": ["Hierarchical", "Parent-child relationships", "Efficient for structured data"],
+      "examples": ["Organizational hierarchy", "File system structure", "Taxonomic tree"]
+    }
+  },
+
+  "pattern_categories": {
+    "centralized": ["Bus", "Star"],
+    "decentralized": ["Tree"],
+    "distributed": ["Mesh", "Network"],
+    "hybrid": ["Bus-Star", "Tree-Mesh"]
+  }
+}

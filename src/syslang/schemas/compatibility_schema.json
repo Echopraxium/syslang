@@ -1,0 +1,136 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://syslang.org/schemas/compatibility/v1.0.0",
+  "title": "SysLang Compatibility Rules Schema",
+  "description": "Schema for validating principle compatibility rules",
+  "type": "object",
+  
+  "properties": {
+    "compatibility_rules": {
+      "type": "object",
+      
+      "properties": {
+        "always_compatible": {
+          "type": "array",
+          "description": "Pairs of principles that are always compatible",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 2,
+            "maxItems": 2
+          }
+        },
+        
+        "potentially_conflicting": {
+          "type": "array",
+          "description": "Pairs of principles that may conflict",
+          "items": {
+            "type": "object",
+            "properties": {
+              "principles": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "conflict_type": {
+                "type": "string",
+                "enum": ["mutual_exclusion", "trade_off", "resource_contention", "goal_conflict"]
+              },
+              "severity": {
+                "type": "string",
+                "enum": ["low", "medium", "high", "critical"]
+              },
+              "resolution": {
+                "type": "string"
+              },
+              "conditions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": ["principles", "conflict_type", "resolution"]
+          }
+        },
+        
+        "synergistic_pairs": {
+          "type": "array",
+          "description": "Pairs of principles that work well together",
+          "items": {
+            "type": "object",
+            "properties": {
+              "principles": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "synergy": {
+                "type": "string"
+              },
+              "amplification_factor": {
+                "type": "number",
+                "minimum": 1
+              },
+              "examples": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": ["principles", "synergy"]
+          }
+        },
+        
+        "transitivity_rules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        
+        "domain_specific_rules": {
+          "type": "object",
+          "description": "Compatibility rules specific to domains",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        
+        "implementation_notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      
+      "required": ["always_compatible", "potentially_conflicting", "synergistic_pairs"]
+    },
+    
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    
+    "based_on_principles_version": {
+      "type": "string",
+      "description": "Version of principles this compatibility refers to"
+    }
+  },
+  
+  "required": ["compatibility_rules", "version"],
+  "additionalProperties": true
+}

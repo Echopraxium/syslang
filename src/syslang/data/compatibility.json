@@ -1,0 +1,66 @@
+{
+  "compatibility_rules": {
+    "always_compatible": [
+      ["Modularity", "Hierarchy"],
+      ["Communication", "Distribution"],
+      ["Resilience", "Redundancy"],
+      ["Process", "All"]
+    ],
+
+    "potentially_conflicting": [
+      {
+        "principles": ["Centralization", "Decentralization"],
+        "conflict_type": "mutual_exclusion",
+        "resolution": "Hybrid approach or context-dependent choice"
+      },
+      {
+        "principles": ["Optimization", "Robustness"],
+        "conflict_type": "trade_off",
+        "resolution": "Pareto optimization or multi-objective approach"
+      },
+      {
+        "principles": ["Simplicity", "Completeness"],
+        "conflict_type": "trade_off", 
+        "resolution": "Appropriate abstraction level"
+      }
+    ],
+
+    "synergistic_pairs": [
+      {
+        "principles": ["Modularity", "Interface"],
+        "synergy": "Modules require well-defined interfaces to interact effectively"
+      },
+      {
+        "principles": ["Feedback", "Adaptation"],
+        "synergy": "Feedback mechanisms enable adaptive behavior"
+      },
+      {
+        "principles": ["Hierarchy", "Coordination"],
+        "synergy": "Hierarchical structures facilitate coordination in complex systems"
+      }
+    ],
+
+    "transitivity_rules": [
+      "If A is compatible with B, and B is compatible with C, then A is likely compatible with C",
+      "If A conflicts with B, and B requires C, then A may have issues with C"
+    ],
+
+    "domain_specific_rules": {
+      "biological_systems": [
+        "Modularity + Hierarchy is essential (organs → tissues → cells)",
+        "Adaptation + Evolution are deeply linked",
+        "Resilience often requires Redundancy"
+      ],
+      "software_systems": [
+        "Modularity + Encapsulation go together",
+        "Scalability + Distribution are often needed",
+        "Security + Accessibility may conflict"
+      ],
+      "social_systems": [
+        "Cooperation + Competition often coexist",
+        "Hierarchy + Equality may conflict",
+        "Stability + Innovation require balance"
+      ]
+    }
+  }
+}
